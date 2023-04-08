@@ -1,0 +1,793 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "swagger pinterest",
+        "description": "swagger capstone express orm pinterest",
+        "termsOfService": "http://example.com/terms/",
+        "contact": {
+            "name": "API Support",
+            "url": "http://www.example.com/support",
+            "email": "support@example.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.1"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:9090/api",
+            "description": "Development server(nên chọn)"
+        },
+        {
+            "url": "https://staging.gigantic-server.com/v1",
+            "description": "Staging server"
+        },
+        {
+            "url": "https://api.gigantic-server.com/v1",
+            "description": "Production server"
+        }
+    ],
+    "tags": [
+        {
+            "name": "TrangChu",
+            "description": "API trang chu"
+        },
+        {
+            "name": "User",
+            "description": "API user"
+        },
+        {
+            "name": "TrangChiTiet",
+            "description": "API trang chi tiết"
+        },
+        {
+            "name": "QuanLyAnh",
+            "description": "API trang quản lý ảnh"
+        },
+        {
+            "name": "ThemAnh",
+            "description": "API trang thêm ảnh"
+        }
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/trang-chu/danh-sach-anh": {
+            "get": {
+                "tags": [
+                    "TrangChu"
+                ],
+                "summary": "Lấy danh sách ảnh",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/hinh-anh"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/trang-chu/tim-kiem-anh": {
+            "get": {
+                "tags": [
+                    "TrangChu"
+                ],
+                "summary": "Tìm kiếm ảnh theo tên hoặc mô tả",
+                "parameters": [
+                    {
+                        "name": "keyword",
+                        "in": "query",
+                        "description": "Nhập tên hoặc mô tả",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/tim-kiem-anh"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/user/signup": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Đăng kí tài khoản",
+                "requestBody": {
+                    "description": "Đăng kí tài khoản",
+                    "require": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/dang-ki"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/nguoi-dung"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/user/login": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Đăng nhập",
+                "requestBody": {
+                    "description": "Đăng nhập tài khoản",
+                    "require": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/dang-nhap"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/nguoi-dung"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/user/update-user": {
+            "put": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "update user",
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "header",
+                        "description": "token",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "update user",
+                    "require": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/dang-ki"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/nguoi-dung"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/trang-chi-tiet/anh-va-nguoi-tao-anh/{id}": {
+            "get": {
+                "tags": [
+                    "TrangChiTiet"
+                ],
+                "summary": "Ảnh và người tạo ảnh",
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "header",
+                        "description": "token",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Thông tin ảnh và người tạo ảnh bằng id ảnh",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/hinh-anh"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/trang-chi-tiet/binh-luan/{id}": {
+            "get": {
+                "tags": [
+                    "TrangChiTiet"
+                ],
+                "summary": "Thông tin bình luận",
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "header",
+                        "description": "token",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Thông tin bình luận theo id ảnh",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/binh-luan"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/trang-chi-tiet/luu-anh/{id}": {
+            "get": {
+                "tags": [
+                    "TrangChiTiet"
+                ],
+                "summary": "Thông tin người dùng đã lưu ảnh",
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "header",
+                        "description": "token",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Thông tin người dùng đã lưu ảnh",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/luu-anh"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/trang-chi-tiet/binh-luan": {
+            "post": {
+                "tags": [
+                    "TrangChiTiet"
+                ],
+                "summary": "Thêm bình luận",
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "header",
+                        "description": "token",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Thêm bình luận",
+                    "require": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/them-binh-luan"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/binh-luan"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/trang-quan-ly-anh/thong-tin-user": {
+            "get": {
+                "tags": [
+                    "QuanLyAnh"
+                ],
+                "summary": "Thông tin người dùng",
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "header",
+                        "description": "token",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/nguoi-dung"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/trang-quan-ly-anh/anh-da-luu/{id}": {
+            "get": {
+                "tags": [
+                    "QuanLyAnh"
+                ],
+                "summary": "Danh sách ảnh đã lưu",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Danh sách ảnh đã lưu theo user id",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/luu-anh"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/trang-quan-ly-anh/anh-da-tao/{id}": {
+            "get": {
+                "tags": [
+                    "QuanLyAnh"
+                ],
+                "summary": "Danh sách ảnh đã tạo",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Danh sách ảnh đã tạo theo user id",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/hinh-anh"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/trang-quan-ly-anh/delete-anh/{id}": {
+            "delete": {
+                "tags": [
+                    "QuanLyAnh"
+                ],
+                "summary": "xóa ảnh",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "xóa hình ảnh",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/id"
+                        }
+                    },
+                    {
+                        "name": "token",
+                        "in": "header",
+                        "description": "token",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/hinh-anh"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/trang-them-anh/them-anh-user" : {
+            "post": {
+              "tags": [
+                "ThemAnh"
+              ],
+              "summary": "Thêm ảnh",
+              "parameters": [
+                {
+                    "name": "token",
+                    "in": "header",
+                    "description": "token",
+                    "required": true,
+                    "schema": {
+                      "type": "string"
+                    }
+                }
+              ],
+              "requestBody": {
+                "description": "Thêm ảnh",
+                "require": true,
+                "content": {
+                  "application/json": {
+                    "schema": {
+                      "$ref": "#/components/schemas/them-anh"
+                    }
+                  }
+                }
+              },
+              "responses": {
+                "200": {
+                  "description": "OK",
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "$ref": "#/components/schemas/hinh-anh"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+    },
+    "components": {
+        "schemas": {
+            "id": {
+                "properties": {
+                    "uuid": {
+                        "type": "integer"
+                    }
+                }
+            },
+            "hinh-anh": {
+                "type": "object",
+                "required": [
+                    "message",
+                    "statusCode"
+                ],
+                "properties": {
+                    "hinh_id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "ten_hinh": {
+                        "type": "string"
+                    },
+                    "duong_dan": {
+                        "type": "string"
+                    },
+                    "mo_ta": {
+                        "type": "string"
+                    },
+                    "nguoi_dung_id": {
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                }
+            },
+            "tim-kiem-anh": {
+                "type": "object",
+                "properties": {
+                    "hinh_id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "ten_hinh": {
+                        "type": "string"
+                    },
+                    "duong_dan": {
+                        "type": "string"
+                    },
+                    "mo_ta": {
+                        "type": "string"
+                    },
+                    "nguoi_dung_id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "nguoi_dung": {
+                        "type": "object",
+                        "properties": {
+                            "nguoi_dung_id": {
+                                "type": "integer",
+                                "format": "int64"
+                            },
+                            "email": {
+                                "type": "string"
+                            },
+                            "mat_khau": {
+                                "type": "string"
+                            },
+                            "ho_ten": {
+                                "type": "string"
+                            },
+                            "tuoi": {
+                                "type": "integer",
+                                "format": "int64"
+                            },
+                            "anh_dai_dien": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            },
+            "nguoi-dung": {
+                "type": "object",
+                "required": [
+                    "message",
+                    "statusCode"
+                ],
+                "properties": {
+                    "nguoi_dung_id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "mat_khau": {
+                        "type": "string"
+                    },
+                    "ho_ten": {
+                        "type": "string"
+                    },
+                    "tuoi": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "anh_dai_dien": {
+                        "type": "string"
+                    }
+                }
+            },
+            "dang-ki": {
+                "type": "object",
+                "required": [
+                    "message",
+                    "statusCode"
+                ],
+                "properties": {
+                    "email": {
+                        "type": "string"
+                    },
+                    "mat_khau": {
+                        "type": "string"
+                    },
+                    "ho_ten": {
+                        "type": "string"
+                    },
+                    "tuoi": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "anh_dai_dien": {
+                        "type": "string"
+                    }
+                }
+            },
+            "dang-nhap": {
+                "type": "object",
+                "required": [
+                    "message",
+                    "statusCode"
+                ],
+                "properties": {
+                    "email": {
+                        "type": "string"
+                    },
+                    "mat_khau": {
+                        "type": "string"
+                    }
+                }
+            },
+            "binh-luan": {
+                "type": "object",
+                "required": [
+                    "message",
+                    "statusCode"
+                ],
+                "properties": {
+                    "binh_luan_id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "nguoi_dung_id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "hinh_id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "ngay_binh_luan": {
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "noi_dung": {
+                        "type": "string"
+                    }
+                }
+            },
+            "them-binh-luan": {
+                "type": "object",
+                "required": [
+                    "message",
+                    "statusCode"
+                ],
+                "properties": {
+                    "nguoi_dung_id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "hinh_id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "noi_dung": {
+                        "type": "string"
+                    }
+                }
+            },
+            "luu-anh": {
+                "type": "object",
+                "required": [
+                    "message",
+                    "statusCode"
+                ],
+                "properties": {
+                    "nguoi_dung_id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "hinh_id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "ngay_luu": {
+                        "type": "string"
+                    }
+                }
+            },
+            "them-anh": {
+                "type": "object",
+                "required": [
+                    "message",
+                    "statusCode"
+                ],
+                "properties": {
+                    "ten_hinh": {
+                        "type": "string"
+                    },
+                    "duong_dan": {
+                        "type": "string"
+                    },
+                    "mo_ta": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    }
+}
