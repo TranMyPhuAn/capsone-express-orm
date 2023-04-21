@@ -4,11 +4,11 @@ WORKDIR /usr/src/app
 
 COPY package*.json .
 
-RUN npm install
+RUN yarn install
 
 COPY prisma/chema.prisma prisma/
 
-RUN npx prisma generate
+RUN yarn prisma generate
 
 COPY . .
 
