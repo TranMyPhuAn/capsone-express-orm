@@ -17,7 +17,7 @@
     },
     "servers": [
         {
-            "url": "pinterest.go88new.com:8080/api",
+            "url": "pinterest.go88new.com/api",
             "description": "Development server(nên chọn)"
         },
         {
