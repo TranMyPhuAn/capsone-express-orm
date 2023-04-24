@@ -17,11 +17,11 @@
     },
     "servers": [
         {
-            "url": "https://pinterest.go88new.com/api",
+            "url": "http://localhost:9090/api",
             "description": "Development server(nên chọn)"
         },
         {
-            "url": "https://staging.gigantic-server.com/v1",
+            "url": "https://pinterest.go88new.com/api",
             "description": "Staging server"
         },
         {

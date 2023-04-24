@@ -6,12 +6,8 @@ COPY package*.json .
 
 RUN yarn install
 
-COPY prisma/schema.prisma prisma/
-
-RUN yarn prisma generate
-
 COPY . .
 
-EXPOSE 8080
+EXPOSE 9090
 
 CMD ["node", "src/index.js"]
